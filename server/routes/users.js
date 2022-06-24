@@ -21,8 +21,8 @@ module.exports = (app) => {
     });
 
     route.post([
-            body('name').notEmpty().withMessage("Name can't be empty"),
-            body('email').notEmpty().isEmail().withMessage("Invalid email")
+            body('_name').notEmpty().withMessage("Name can't be empty"),
+            body('_email').notEmpty().isEmail().withMessage("Invalid email")
         ],
         (req, res) => {
 
