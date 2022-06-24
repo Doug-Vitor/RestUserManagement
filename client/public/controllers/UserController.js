@@ -30,14 +30,15 @@ class UserController {
 
                 let user = new User();
                 user.loadFromJSON(result);
-                user.saveInStorage();
+                user.save().then((data) => {
+                    this.getTrHtml(data, tr)
 
-                this.getTrHtml(user, tr)
-
-                this.updateUsersCount();
-                this._updateFormEl.reset();
-                this.changeButtonState(this._updateFormEl);
-                this.showCreateForm();
+                    this.updateUsersCount();
+                    this._updateFormEl.reset();
+                    this.changeButtonState(this._updateFormEl);
+                    this.showCreateForm();
+    
+                });
             }, (error) => {
                 alert(error);
             })
@@ -49,7 +50,7 @@ class UserController {
             if (confirm('Você tem certeza?')) {
                 let user = new User();
                 user.loadFromJSON(JSON.parse(tr.dataset.user));
-                user.removeFromStorage();
+                user.delete();
 
                 tr.remove();
                 this.updateUsersCount();
@@ -105,11 +106,11 @@ class UserController {
 
             this.getPhoto(this._formEl).then((content) => {
                 userData.photo = content;
-                userData.saveInStorage();
-                this.insertToTable(userData);
-                
-                this._formEl.reset();
-                this.changeButtonState(this._formEl);
+                userData.save().then((user) => {
+                    this.insertToTable(user);
+                    this._formEl.reset();
+                    this.changeButtonState(this._formEl);    
+                });
             }, (error) => {
                 alert(error);
                 //console.log(error);

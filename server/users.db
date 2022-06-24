@@ -1,1 +1,4 @@
 {"_name":"Fulano","_email":"fulano@gmail.com","_password":"123","_id":"1"}
+{"_name":"Douglas Vitor","_gender":"M","_birth":"","_country":"","_email":"dgdev@gmail.com","_password":"12","_photo":"dist/img/boxed-bg.jpg","_admin":false,"_register":"2022-06-24T12:03:42.871Z","_id":"0Mjo3gexdLeCWrFa"}
+{"_name":"Douglas V","_gender":"M","_birth":"","_country":"","_email":"dgdev@gmail.com","_password":"01","_photo":"dist/img/boxed-bg.jpg","_admin":false,"_register":"2022-06-24T12:07:00.249Z","_id":"naKxFkpRQqg2mZZ6"}
+{"_name":"Fulano F","_birth":"","_country":"","_email":"fulano@gmail.com","_password":"123","_admin":false,"_register":"2022-06-24T12:08:03.193Z","_id":"1"}

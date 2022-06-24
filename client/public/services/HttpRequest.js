@@ -19,8 +19,9 @@ class HttpRequest {
 
                 resolve(response);
             };
-    
-            request.send();
+            
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(params));
         });    
     }
 

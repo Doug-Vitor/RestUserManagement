@@ -34,7 +34,7 @@ class User {
                     this[key] = new Date(json[key]);
                     break;
                 default:
-                    this[key] = json[key];
+                    if(key.substring(0, 1) === '_')this[key] = json[key];
                     break;
             }
         }
@@ -50,7 +50,7 @@ class User {
         return userId;
     }
 
-    static getUsersInStorage() {
+    static getAll() {
         let users = [];
         let items = localStorage.getItem('users');
 
@@ -60,25 +60,33 @@ class User {
         return users;
     }
 
-    saveInStorage() {
-        let users = User.getUsersInStorage();
-
-        if (this.id > 0) {
-            users.map(user => {
-                if (user._id == this.id)
-                    Object.assign(user, this);
-                return user;
-            });
-        } else {
-            this._id = this.getNewId();
-            users.push(this);
-        }
-
-        localStorage.setItem('users', JSON.stringify(users));
+    toJSON() {
+        let json = {};
+        Object.keys(this).forEach((key) => {
+            if(this[key] !== undefined)json[key] = this[key];
+        });
+        return json;
     }
 
-    removeFromStorage() {
-        let users = User.getUsersInStorage();
+    save() {
+        return new Promise((resolve, reject) => {
+            let promise;
+            if (this.id)
+                promise=HttpRequest.put(`/users/${this.id}`, this.toJSON());
+            else
+                promise=HttpRequest.post("/users", this.toJSON());
+        
+            promise.then(data => {
+                this.loadFromJSON(data);
+                resolve(this);
+            }).catch((error) => {
+                reject(error);
+            })
+        })
+    }
+
+    delete() {
+        let users = User.getAll();
         users.forEach((user, index) => {
             if (this._id == user._id)
                 users.splice(index, 1);
