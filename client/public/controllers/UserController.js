@@ -180,7 +180,7 @@ class UserController {
     }*/
 
     listInTable() {
-        HttpRequest.get('/users').then((data) => {
+        User.getAll().then((data) => {
             data.user.forEach(userData => {
                 let user = new User();
                 user.loadFromJSON(userData);
