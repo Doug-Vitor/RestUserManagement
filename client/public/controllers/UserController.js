@@ -50,10 +50,10 @@ class UserController {
             if (confirm('Você tem certeza?')) {
                 let user = new User();
                 user.loadFromJSON(JSON.parse(tr.dataset.user));
-                user.delete();
-
-                tr.remove();
-                this.updateUsersCount();
+                user.delete().then(() => {
+                    tr.remove();
+                    this.updateUsersCount();    
+                });
             }
         });
 
