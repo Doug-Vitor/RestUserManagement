@@ -179,25 +179,13 @@ class UserController {
     }*/
 
     listInTable() {
-        let request = new XMLHttpRequest();
-        request.open('GET', '/users');
-        request.onload = () => {
-            let response = {users:[]};
-
-            try {
-                response = JSON.parse(request.responseText);
-            } catch (error) {
-                console.log(error);
-            }
-
-            response.user.forEach(userData => {
+        HttpRequest.get('/users').then((data) => {
+            data.user.forEach(userData => {
                 let user = new User();
                 user.loadFromJSON(userData);
                 this.insertToTable(user);
             });
-        }
-
-        request.send();
+        });
     }
 
     insertToTable(userData) {
